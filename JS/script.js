@@ -20,7 +20,7 @@ class Calculator{
     }
 
     processoOperation(operation){
-        if(this.currentOperationText.innerText === ""){
+        if(this.currentOperationText.innerText === "" && operation !== "C"){
             if(this.previousOperationText.innerText !== ""){
                 this.changeOperation(operation)
             }   
@@ -51,6 +51,23 @@ class Calculator{
                 operationValue = previous * current
                 this.updateScreen(operationValue, operation, current, previous)
             break;
+
+            case "DEL":
+                this.processDelOperator();
+            break;
+
+            case "CE":
+                this.processClearCurrentOperation();
+            break;
+
+            case "C":
+                this.processClearOperation();
+            break;
+
+            case "=":
+                this.processEqualOperator();
+            break;
+
         default:
             return;
         }
@@ -84,6 +101,25 @@ class Calculator{
 
         this.previousOperationText.innerText = this.previousOperationText.innerText.slice(0, -1) + operation;
 
+    }
+
+    processDelOperator(){
+        this.currentOperationText.innerText = this.currentOperationText.innerText.slice(0, -1);       
+    }
+
+    processClearCurrentOperation(){
+        this.currentOperationText.innerText = ''
+    }
+
+    processClearOperation(){
+        this.previousOperationText.innerText = ''
+        this.currentOperationText.innerText = ''
+    }
+
+    processEqualOperator(){
+        const operation = previousOperationText.innerText.split(" ")[1]
+
+        this.processoOperation(operation)
     }
 }
 
